@@ -15,7 +15,8 @@ describe 'Resque::ServerHelper' do
 
     describe 'when the data type is hash' do
       it 'returns the number of fields contained in the hash' do
-        Resque.redis.hset('hash', { 'f1' => 'v1', 'f2' => 'v2' })
+        Resque.redis.hset('hash','f1', 'v1')
+        Resque.redis.hset('hash','f2', 'v2')
         assert_equal 2, redis_get_size('hash')
       end
     end
@@ -62,7 +63,8 @@ describe 'Resque::ServerHelper' do
 
     describe 'when the data type is hash' do
       it 'returns an array of 20 elements counting from `start`' do
-        Resque.redis.hset('hash', { 'f1' => 'v1', 'f2' => 'v2' })
+        Resque.redis.hset('hash','f1', 'v1')
+        Resque.redis.hset('hash','f2', 'v2')
         assert_equal [['f1', 'v1'], ['f2', 'v2']], redis_get_value_as_array('hash')
       end
     end
