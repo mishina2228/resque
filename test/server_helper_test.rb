@@ -79,7 +79,7 @@ describe 'Resque::ServerHelper' do
       it 'returns an array of 20 elements counting from `start`' do
         Resque.redis.sadd('set', 'v1')
         Resque.redis.sadd('set', 'v2')
-        assert_equal ['v1', 'v2'], redis_get_value_as_array('set')
+        assert_equal ['v1', 'v2'], redis_get_value_as_array('set').sort
       end
     end
 
