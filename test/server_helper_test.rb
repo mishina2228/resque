@@ -5,11 +5,19 @@ require 'resque/server_helper'
 describe 'Resque::ServerHelper' do
   include Resque::ServerHelper
 
+  def exists?(key)
+    if Gem::Version.new(Redis::VERSION) >= Gem::Version.new('4.2.0')
+      Resque.redis.exists?(key)
+    else
+      Resque.redis.exists(key)
+    end
+  end
+
   describe 'redis_get_size' do
     describe 'when the data type is none' do
       it 'returns 0' do
-        refute Resque.redis.exists?('not_exist')
-        assert_equal 0, redis_get_size('not_exist')
+        refute exists?('none')
+        assert_equal 0, redis_get_size('none')
       end
     end
 
@@ -56,8 +64,8 @@ describe 'Resque::ServerHelper' do
   describe 'redis_get_value_as_array' do
     describe 'when the data type is none' do
       it 'returns an empty array' do
-        refute Resque.redis.exists?('not_exist')
-        assert_equal [], redis_get_value_as_array('not_exist')
+        refute exists?('none')
+        assert_equal [], redis_get_value_as_array('none')
       end
     end
 
