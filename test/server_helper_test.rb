@@ -39,8 +39,7 @@ describe 'Resque::ServerHelper' do
 
     describe 'when the data type is set' do
       it 'returns the number of elements of the set' do
-        Resque.redis.sadd('set', 'v1')
-        Resque.redis.sadd('set', 'v2')
+        Resque.redis.sadd('set', ['v1', 'v2'])
         assert_equal 2, redis_get_size('set')
       end
     end
@@ -87,8 +86,7 @@ describe 'Resque::ServerHelper' do
 
     describe 'when the data type is set' do
       it 'returns an array of 20 elements counting from `start`' do
-        Resque.redis.sadd('set', 'v1')
-        Resque.redis.sadd('set', 'v2')
+        Resque.redis.sadd('set', ['v1', 'v2'])
         assert_equal ['v1', 'v2'], redis_get_value_as_array('set').sort
       end
     end
