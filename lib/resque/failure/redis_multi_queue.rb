@@ -73,7 +73,7 @@ module Resque
 
       def self.requeue(id, queue = :failed)
         item = all(id, 1, queue)
-        item['retried_at'] = Time.now.strftime("%Y/%m/%d %H:%M:%S %Z")
+        item['retried_at'] = Time.now.strftime("%Y/%m/%d %H:%M:%S %z")
         data_store.update_item_in_failed_queue(id,Resque.encode(item),queue)
         Job.create(item['queue'], item['payload']['class'], *item['payload']['args'])
       end
